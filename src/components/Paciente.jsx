@@ -1,12 +1,30 @@
+import Swal from 'sweetalert2'
+
 const Paciente = ({paciente, setPaciente, eliminarPaciente}) => {
     const { nombre, propietario, email, fecha, sintomas, id } = paciente
 
     const handleEliminar = () => {
-        const respuesta = confirm('Deseas eliminar este paciente?');
 
-        if(respuesta) {
-            eliminarPaciente(id)
-        }
+        Swal.fire({
+            title: 'Seguro quieres eliminar?',
+            text: "Una vez eliminado no se podra recuperar",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Eliminar',
+            cancelButtonText: 'Cancelar'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              eliminarPaciente(id)
+              Swal.fire(
+                'Eliminado!',
+                'Eliminado sastifactoriamente.',
+                'success'
+              )
+            }
+          })
+
     }
 
     return (
